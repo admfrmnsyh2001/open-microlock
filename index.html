@@ -8,12 +8,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Use Inter and JetBrains Mono for modern look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Three.js for 3D Chip -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -59,17 +56,47 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero-section">
-        <div id="canvas-container"></div>
-        
-        <div class="hero-content">
-            <h1 class="hero-title">Keamanan Digital<br>Terbuka & Andal</h1>
-            <p class="hero-desc">
-                Sistem keamanan digital yang memadukan protokol modern dengan infrastruktur terbuka. Siap diakses via DARMI Protocol.
-            </p>
-            <div class="hero-actions">
-                <a href="#darmi" class="btn btn-primary">
-                    <span>Inisialisasi Simulator</span> <i class="fas fa-arrow-right"></i>
-                </a>
+        <div class="hero-inner">
+            <!-- LEFT: Text content -->
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="status-pulse"></span>
+                    <span class="mono-label" style="margin-bottom:0;">STATUS: ACTIVE</span>
+                </div>
+                <h1 class="hero-title">Keamanan Digital<br><span class="accent-text">Terbuka & Andal</span></h1>
+                <p class="hero-desc">
+                    Sistem keamanan digital yang memadukan protokol modern dengan infrastruktur terbuka. Siap diakses via DARMI Protocol.
+                </p>
+                <div class="hero-actions">
+                    <a href="#darmi" class="btn btn-primary">
+                        <span>Inisialisasi Simulator</span> <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#about" class="btn btn-outline">
+                        <span>Dokumentasi</span>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Open Source</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-value">DARMI</span>
+                        <span class="stat-label">v1.0 Protocol</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-value">Q3 2026</span>
+                        <span class="stat-label">Target Rilis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Chip image -->
+            <div class="hero-chip-wrap">
+                <div class="chip-glow-ring"></div>
+                <div class="chip-img-container" id="chipTilt">
+                    <img src="chip.png" alt="3D Microchip" class="chip-img" id="chipImg" draggable="false">
+                </div>
             </div>
         </div>
 
@@ -78,15 +105,12 @@
             <div class="marquee-label">WORKS WITH</div>
             <div class="marquee-track-container">
                 <div class="marquee-track">
-                    <!-- Original items -->
                     <div class="marquee-item"><i class="fas fa-microchip"></i> ESP32 / ESP8266</div>
                     <div class="marquee-item"><i class="fas fa-network-wired"></i> MQTT Protocol</div>
                     <div class="marquee-item"><i class="fas fa-shield-alt"></i> RSA-2048 Enkripsi</div>
                     <div class="marquee-item"><i class="fas fa-satellite-dish"></i> DARMI Terminal</div>
                     <div class="marquee-item"><i class="fas fa-code"></i> C++ / Node.js</div>
                     <div class="marquee-item"><i class="fas fa-server"></i> Cloud Broker</div>
-                    
-                    <!-- Duplicated for continuous animation -->
                     <div class="marquee-item"><i class="fas fa-microchip"></i> ESP32 / ESP8266</div>
                     <div class="marquee-item"><i class="fas fa-network-wired"></i> MQTT Protocol</div>
                     <div class="marquee-item"><i class="fas fa-shield-alt"></i> RSA-2048 Enkripsi</div>

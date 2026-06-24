@@ -5,230 +5,69 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+
     // =========================================
-    // 1. THREE.JS — 3D INTERACTIVE CHIP
+    // 1. CHIP IMAGE — 3D CSS TILT INTERACTION
     // =========================================
 
-    const canvas = document.getElementById('canvas-container');
-    if (!canvas || typeof THREE === 'undefined') {
-        console.warn('[CHIP3D] Three.js not available or container missing.');
-    } else {
-        initChip3D(canvas);
+    const chipTilt = document.getElementById('chipTilt');
+    const chipImg = document.getElementById('chipImg');
+
+    if (chipTilt && chipImg) {
+        let rafId = null;
+        let targetRotX = 0, targetRotY = 0;
+        let curRotX = 0, curRotY = 0;
+        let idleAngle = 0;
+        let isHovering = false;
+
+        // Smooth interpolation loop
+        function animateChip() {
+            rafId = requestAnimationFrame(animateChip);
+
+            if (!isHovering) {
+                idleAngle += 0.012;
+                targetRotX = Math.sin(idleAngle * 0.7) * 6;
+                targetRotY = Math.sin(idleAngle * 0.5) * 8;
+            }
+
+            curRotX += (targetRotX - curRotX) * 0.08;
+            curRotY += (targetRotY - curRotY) * 0.08;
+
+            chipTilt.style.transform = `perspective(700px) rotateX(${curRotX}deg) rotateY(${curRotY}deg)`;
+
+            // Dynamic glow follows tilt
+            const glowX = 50 + curRotY * 1.5;
+            const glowY = 50 - curRotX * 1.5;
+            chipImg.style.filter = `
+                drop-shadow(0 0 40px rgba(0,229,204,0.35))
+                drop-shadow(0 20px 60px rgba(0,0,0,0.8))
+                drop-shadow(${curRotY * 0.5}px ${-curRotX * 0.5}px 30px rgba(0,229,204,0.2))
+            `;
+        }
+        animateChip();
+
+        // Mouse move → track inside hero only
+        const heroSection = document.getElementById('home');
+        if (heroSection) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = chipTilt.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dx = (e.clientX - cx) / (rect.width * 0.5);
+                const dy = (e.clientY - cy) / (rect.height * 0.5);
+
+                isHovering = true;
+                targetRotX = -dy * 18;
+                targetRotY = dx * 22;
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                isHovering = false;
+            });
+        }
     }
 
-    function initChip3D(container) {
-        const scene = new THREE.Scene();
 
-        const w = container.clientWidth;
-        const h = container.clientHeight;
-
-        const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
-        camera.position.set(0, 0, 7);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(w, h);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setClearColor(0x000000, 0);
-        container.appendChild(renderer.domElement);
-
-        // ---- LIGHTS ----
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-        scene.add(ambientLight);
-
-        const frontLight = new THREE.DirectionalLight(0x00e5cc, 2.5);
-        frontLight.position.set(0, 3, 6);
-        scene.add(frontLight);
-
-        const backLight = new THREE.DirectionalLight(0x5064ff, 1.8);
-        backLight.position.set(-4, -2, -4);
-        scene.add(backLight);
-
-        const topLight = new THREE.PointLight(0x00e5cc, 1.5, 20);
-        topLight.position.set(0, 6, 3);
-        scene.add(topLight);
-
-        // ---- MATERIALS ----
-        const chipBodyMat = new THREE.MeshStandardMaterial({
-            color: 0x1a2035,
-            metalness: 0.85,
-            roughness: 0.2,
-            envMapIntensity: 1.0,
-        });
-
-        const pinMat = new THREE.MeshStandardMaterial({
-            color: 0x9ab8c8,
-            metalness: 0.98,
-            roughness: 0.1,
-        });
-
-        const traceMat = new THREE.MeshStandardMaterial({
-            color: 0x00e5cc,
-            emissive: 0x00e5cc,
-            emissiveIntensity: 0.6,
-            metalness: 0.5,
-            roughness: 0.3,
-        });
-
-        const coreMat = new THREE.MeshStandardMaterial({
-            color: 0x0a0f1e,
-            metalness: 0.6,
-            roughness: 0.4,
-        });
-
-        // ---- CHIP BODY ----
-        const chipGroup = new THREE.Group();
-
-        const bodyGeo = new THREE.BoxGeometry(3.2, 3.2, 0.35, 1, 1, 1);
-        const body = new THREE.Mesh(bodyGeo, chipBodyMat);
-        chipGroup.add(body);
-
-        // ---- DIE (center square) ----
-        const dieGeo = new THREE.BoxGeometry(1.8, 1.8, 0.05);
-        const die = new THREE.Mesh(dieGeo, coreMat);
-        die.position.z = 0.2;
-        chipGroup.add(die);
-
-        // ---- CIRCUIT TRACE LINES ON DIE ----
-        const makeTrace = (x, y, w, h) => {
-            const geo = new THREE.BoxGeometry(w, h, 0.03);
-            const mesh = new THREE.Mesh(geo, traceMat);
-            mesh.position.set(x, y, 0.23);
-            return mesh;
-        };
-        chipGroup.add(makeTrace(0, 0, 1.6, 0.05));
-        chipGroup.add(makeTrace(0, 0, 0.05, 1.6));
-        chipGroup.add(makeTrace(0.5, 0.5, 0.5, 0.04));
-        chipGroup.add(makeTrace(-0.5, -0.5, 0.5, 0.04));
-        chipGroup.add(makeTrace(0.5, -0.3, 0.04, 0.6));
-        chipGroup.add(makeTrace(-0.5, 0.3, 0.04, 0.6));
-
-        // ---- CENTER CORE DOT ----
-        const coreGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.04, 16);
-        const core = new THREE.Mesh(coreGeo, traceMat);
-        core.rotation.x = Math.PI / 2;
-        core.position.z = 0.24;
-        chipGroup.add(core);
-
-        // ---- PINS (all 4 sides) ----
-        const pinGeo = new THREE.BoxGeometry(0.12, 0.35, 0.08);
-        const PIN_COLS = 6;
-        const SPACING = 0.38;
-        const OFFSET = -(PIN_COLS - 1) * SPACING / 2;
-
-        for (let i = 0; i < PIN_COLS; i++) {
-            const x = OFFSET + i * SPACING;
-
-            // Top pins
-            const topPin = new THREE.Mesh(pinGeo, pinMat);
-            topPin.position.set(x, 1.77, 0);
-            chipGroup.add(topPin);
-
-            // Bottom pins
-            const botPin = new THREE.Mesh(pinGeo, pinMat);
-            botPin.position.set(x, -1.77, 0);
-            chipGroup.add(botPin);
-
-            // Left pins (rotated 90deg)
-            const leftPin = new THREE.Mesh(pinGeo, pinMat);
-            leftPin.rotation.z = Math.PI / 2;
-            leftPin.position.set(-1.77, x, 0);
-            chipGroup.add(leftPin);
-
-            // Right pins (rotated 90deg)
-            const rightPin = new THREE.Mesh(pinGeo, pinMat);
-            rightPin.rotation.z = Math.PI / 2;
-            rightPin.position.set(1.77, x, 0);
-            chipGroup.add(rightPin);
-        }
-
-        // ---- CORNER MARKERS ----
-        const cornerMat = new THREE.MeshStandardMaterial({ color: 0x00e5cc, emissive: 0x00e5cc, emissiveIntensity: 0.8 });
-        const cornerGeo = new THREE.SphereGeometry(0.07, 8, 8);
-        const corners = [
-            [-1.4, 1.4], [1.4, 1.4], [-1.4, -1.4], [1.4, -1.4]
-        ];
-        corners.forEach(([cx, cy]) => {
-            const c = new THREE.Mesh(cornerGeo, cornerMat);
-            c.position.set(cx, cy, 0.2);
-            chipGroup.add(c);
-        });
-
-        // ---- EDGE CHAMFER GLOW (lines) ----
-        const edgeMat = new THREE.LineBasicMaterial({ color: 0x00e5cc, transparent: true, opacity: 0.35 });
-        const edgePts = [
-            new THREE.Vector3(-1.6, 1.6, 0.18),
-            new THREE.Vector3(1.6, 1.6, 0.18),
-            new THREE.Vector3(1.6, -1.6, 0.18),
-            new THREE.Vector3(-1.6, -1.6, 0.18),
-            new THREE.Vector3(-1.6, 1.6, 0.18),
-        ];
-        const edgeGeo = new THREE.BufferGeometry().setFromPoints(edgePts);
-        const edgeLine = new THREE.Line(edgeGeo, edgeMat);
-        chipGroup.add(edgeLine);
-
-        chipGroup.rotation.x = 0.3;
-        chipGroup.rotation.y = 0.25;
-        scene.add(chipGroup);
-
-        // ---- PARTICLES (floating dots) ----
-        const particleCount = 150;
-        const positions = new Float32Array(particleCount * 3);
-        for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 14;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 14;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 8 - 3;
-        }
-        const partGeo = new THREE.BufferGeometry();
-        partGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const partMat = new THREE.PointsMaterial({ color: 0x00e5cc, size: 0.04, transparent: true, opacity: 0.4 });
-        const particles = new THREE.Points(partGeo, partMat);
-        scene.add(particles);
-
-        // ---- MOUSE INTERACTION ----
-        let targetRotX = 0.3;
-        let targetRotY = 0.25;
-        let curRotX = 0.3;
-        let curRotY = 0.25;
-
-        window.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            const mx = (e.clientX - rect.left) / rect.width - 0.5;
-            const my = (e.clientY - rect.top) / rect.height - 0.5;
-            targetRotY = mx * 1.2;
-            targetRotX = my * 0.8;
-        });
-
-        // Idle float
-        let clock = 0;
-
-        // ---- ANIMATION LOOP ----
-        function animate() {
-            requestAnimationFrame(animate);
-            clock += 0.008;
-
-            // Smooth interpolation toward target rotation
-            curRotX += (targetRotX - curRotX) * 0.06;
-            curRotY += (targetRotY - curRotY) * 0.06;
-
-            chipGroup.rotation.x = curRotX + Math.sin(clock * 0.7) * 0.04;
-            chipGroup.rotation.y = curRotY + Math.sin(clock * 0.5) * 0.06;
-            chipGroup.position.y = Math.sin(clock * 0.9) * 0.12;
-
-            particles.rotation.y += 0.0008;
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // ---- RESIZE ----
-        window.addEventListener('resize', () => {
-            const nw = container.clientWidth;
-            const nh = container.clientHeight;
-            camera.aspect = nw / nh;
-            camera.updateProjectionMatrix();
-            renderer.setSize(nw, nh);
-        });
-    }
 
     // =========================================
     // 2. MOBILE MENU
