@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Microlock - Engineering & Security</title>
+    <meta name="description" content="Open Microlock adalah sistem keamanan digital untuk mengembangkan, menyebarkan, dan membantu masyarakat memanfaatkan teknologi keamanan seperti DARMI.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-abstract">
+                    <div></div><div></div><div></div><div></div>
+                </div>
+                <div class="logo-text">
+                    OPEN<span>MICROLOCK</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#home" class="active">/ Beranda</a>
+                <a href="#about">/ Latar Belakang</a>
+                <a href="#founder">/ Tim Inti</a>
+                <a href="#mindmap">/ Arsitektur</a>
+                <a href="#darmi">/ Simulator</a>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Nav Menu -->
+    <div class="mobile-nav">
+        <a href="#home">/ Beranda</a>
+        <a href="#about">/ Latar Belakang</a>
+        <a href="#founder">/ Tim Inti</a>
+        <a href="#mindmap">/ Arsitektur</a>
+        <a href="#darmi">/ Simulator</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="bento-grid hero-bento">
+                
+                <div class="bento-panel panel-main">
+                    <div>
+                        <span class="mono-label">[ STATUS: ACTIVE ]</span>
+                        <h1 class="hero-title">Keamanan Digital<br>Terbuka & Andal</h1>
+                        <p class="hero-desc">
+                            Komunitas dan framework sistem keamanan digital sebagai wadah kolaborasi untuk mengembangkan teknologi penguncian berbasis IoT.
+                        </p>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="#darmi" class="btn btn-primary">
+                            <span>Inisialisasi Simulator</span> <i class="fas fa-terminal"></i>
+                        </a>
+                        <a href="#about" class="btn">
+                            <span>Dokumentasi Sistem</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bento-panel panel-visual">
+                    <div class="abstract-hardware">
+                        <div class="crosshair vertical"></div>
+                        <div class="crosshair horizontal"></div>
+                        <div class="hardware-ring">
+                            <div class="hardware-core"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bento-panel panel-stats">
+                    <div class="stat-item">
+                        <span class="mono-label">Lisensi Kernel</span>
+                        <span class="stat-val">100% OSS</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="mono-label">Protokol Utama</span>
+                        <span class="stat-val">DARMI v1.0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="mono-label">Target Rilis</span>
+                        <span class="stat-val">Q3 2026</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Latar Belakang Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="mono-label">/ 01. LATAR BELAKANG</span>
+                <h2>Membangun Fondasi Keamanan</h2>
+            </div>
+            
+            <div class="bento-grid about-bento">
+                <div class="bento-panel panel-half">
+                    <span class="mono-label">[ CORE ]</span>
+                    <h3>Open Microlock</h3>
+                    <p>
+                        Sebuah arsitektur dan komunitas sistem keamanan digital yang didirikan sebagai wadah untuk mengembangkan solusi keamanan bersama.
+                    </p>
+                    <p>
+                        Fokus utama kami adalah menghadirkan solusi keamanan digital yang inklusif, andal, dan mudah diakses oleh siapa saja tanpa hambatan biaya atau kompleksitas.
+                    </p>
+                </div>
+                
+                <div class="bento-panel panel-half">
+                    <span class="mono-label">[ TECHNOLOGY ]</span>
+                    <h3>DARMI Protocol</h3>
+                    <p>
+                        Digital Access Remote Management Interface. Sistem antarmuka jarak jauh untuk mengintegrasikan mikrokontroler (ESP32/ESP8266) dengan kontrol cloud real-time.
+                    </p>
+                    <br>
+                    <span class="mono-value"># Low Latency MQTT</span><br>
+                    <span class="mono-value"># RSA-2048 Encryption</span><br>
+                    <span class="mono-value"># Extendable API Structure</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section id="founder">
+        <div class="container">
+            <div class="section-header">
+                <span class="mono-label">/ 02. TIM INTI</span>
+                <h2>Rekayasa & Pengembangan</h2>
+            </div>
+
+            <div class="bento-grid profiles-bento">
+                <div class="bento-panel profile-panel">
+                    <div class="profile-info">
+                        <span class="mono-label">[ FOUNDER ]</span>
+                        <h3>Adam Firmansyah</h3>
+                        <span class="mono-value">Security System Engineer</span>
+                        <br><br>
+                        <p>Ahli dalam perancangan arsitektur keamanan IoT, pengerasan firmware, dan enkripsi data tingkat enterprise.</p>
+                        <p>Saat ini menjabat sebagai Lead Engineer di PT Lumba Karya Asia, memimpin integrasi sistem skala industri.</p>
+                    </div>
+                </div>
+
+                <div class="bento-panel profile-panel">
+                    <div class="profile-info">
+                        <span class="mono-label">[ CO-FOUNDER ]</span>
+                        <h3>Revanza</h3>
+                        <span class="mono-value">Software Engineer</span>
+                        <br><br>
+                        <p>Fokus pada pengembangan web platform interaktif, dashboard kontrol, dan sinkronisasi protokol hardware-software.</p>
+                        <p>Aktif berkontribusi di berbagai proyek Open Source termasuk pengembangan web dan IoT Firmware.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-tabs">
+                <button class="btn tab-btn active" data-target="timeline-adam">Log: Adam F.</button>
+                <button class="btn tab-btn" data-target="timeline-revanza">Log: Revanza</button>
+            </div>
+
+            <!-- Timeline Adam Firmansyah -->
+            <div id="timeline-adam" class="timeline-container-wrapper active">
+                <div class="timeline-grid">
+                    <div class="timeline-item">
+                        <span class="mono-label">2023 - PRESENT</span>
+                        <div>
+                            <h4>Lead Engineer</h4>
+                            <span class="mono-value">PT Lumba Karya Asia</span>
+                            <p>Memimpin perancangan sistem keamanan fisik dan otomasi industri, mengintegrasikan teknologi IoT untuk keamanan skala perusahaan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Revanza -->
+            <div id="timeline-revanza" class="timeline-container-wrapper">
+                <div class="timeline-grid">
+                    <div class="timeline-item">
+                        <span class="mono-label">2026 - PRESENT</span>
+                        <div>
+                            <h4>Software Engineer | OSS Builder</h4>
+                            <span class="mono-value">PT Yapindo, PT Banyu Tekno, OpenDesa</span>
+                            <p>Berfokus penuh pada penggabungan teknologi web dan IoT untuk meluncurkan ekosistem Open Microlock yang siap pakai.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="mono-label">MAR 2025</span>
+                        <div>
+                            <h4>Jr Software Engineer | IoT Engineer</h4>
+                            <span class="mono-value">PT Banyu Tekno Solusindo</span>
+                            <p>Mengembangkan firmware ESP32/ESP8266 dan merintis modul pengunci digital nirkabel pertama.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="mono-label">JUN 2024</span>
+                        <div>
+                            <h4>Web Developer</h4>
+                            <span class="mono-value">PT Sagara Xinix Solusitama</span>
+                            <p>Mengembangkan aplikasi web responsif dan menerapkan UI/UX interaktif.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mind Map Section -->
+    <section id="mindmap">
+        <div class="container">
+            <div class="section-header">
+                <span class="mono-label">/ 03. ARSITEKTUR</span>
+                <h2>Siklus Ekosistem</h2>
+            </div>
+
+            <div class="ecosystem-grid">
+                <div class="eco-node">
+                    <span class="mono-label">[ NODE 01 ]</span>
+                    <h3>Maintainer</h3>
+                    <p>Merancang arsitektur, mengelola repo kode, dan menetapkan standar keamanan.</p>
+                </div>
+                <div class="eco-node">
+                    <span class="mono-label">[ NODE 02 ]</span>
+                    <h3>Kontributor</h3>
+                    <p>Mengirim Pull Request, fitur baru, dan patch kerentanan.</p>
+                </div>
+                <div class="eco-node">
+                    <span class="mono-label">[ NODE 03 ]</span>
+                    <h3>Reviewer</h3>
+                    <p>Melakukan audit kode dan memastikan kompatibilitas sebelum merge.</p>
+                </div>
+                <div class="eco-node">
+                    <span class="mono-label">[ NODE 04 ]</span>
+                    <h3>Pengguna</h3>
+                    <p>Memanfaatkan ekosistem, memberi log bug, dan request fitur.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DARMI Simulator Section -->
+    <section id="darmi">
+        <div class="container">
+            <div class="section-header">
+                <span class="mono-label">/ 04. SIMULATOR INTERAKTIF</span>
+                <h2>DARMI Terminal Node</h2>
+            </div>
+
+            <div class="bento-grid simulator-bento">
+                <div class="bento-panel sim-hardware">
+                    <div class="sim-header">
+                        <span class="mono-label">HW_ADDR: ESP32-DEV-1</span>
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="lock-interface">
+                        <div class="lock-indicator locked" id="lockIndicator">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="door-status-badge" id="doorStatus">STATE: LOCKED_SECURE</div>
+                    </div>
+                    <div class="sim-controls">
+                        <button class="btn btn-primary" id="btnUnlock">
+                            <span>EXEC UNLOCK</span>
+                        </button>
+                        <button class="btn btn-danger" id="btnLock" disabled>
+                            <span>EXEC LOCK</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bento-panel sim-console">
+                    <div class="sim-header">
+                        <span class="mono-label">CONSOLE LOG / PORT 443</span>
+                        <span class="mono-value" id="connStatus">ESTABLISHED</span>
+                    </div>
+                    <div class="console-body" id="consoleLogs">
+                        <div class="log-line system">[SYS] DARMI Terminal v1.0 initialized.</div>
+                        <div class="log-line info">[NET] MAC: 3C:61:05:4E:A2:8C</div>
+                        <div class="log-line success">[WIFI] Bound to: Secure_Net_Primary</div>
+                        <div class="log-line info">[MQTT] Sub: openmicrolock/device/01/control</div>
+                        <div class="log-line system">[SYS] Awaiting payload...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Community Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="mono-label">/ 05. KOLABORASI</span>
+                <h2>Bergabung Bersama Kami</h2>
+            </div>
+
+            <div class="bento-grid contact-bento">
+                <div class="bento-panel contact-info">
+                    <h3 style="font-size: 2rem; margin-bottom: 24px;">Bangun Keamanan Mandiri.</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 40px;">Kami mencari kontributor untuk core firmware, web interface, dan hardware engineering.</p>
+                    
+                    <div style="margin-bottom: 24px;">
+                        <span class="mono-label">Email Gateway</span><br>
+                        <span class="mono-value">revanza@microlock.org</span>
+                    </div>
+                    <div>
+                        <span class="mono-label">Repository</span><br>
+                        <span class="mono-value">github.com/open-microlock</span>
+                    </div>
+                </div>
+
+                <div class="bento-panel contact-form">
+                    <form id="joinForm">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Alamat Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Divisi Kontribusi</label>
+                            <select id="role">
+                                <option value="programmer">Software / Firmware Engineer</option>
+                                <option value="reviewer">Security Auditor</option>
+                                <option value="hardware">Hardware Designer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Pesan / Log Transmisi</label>
+                            <textarea id="message" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;"><span>Kirim Aplikasi</span></button>
+                    </form>
+                    
+                    <div class="form-success-message" id="formSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <h4 style="font-size: 1.5rem; margin-bottom: 8px;">Transmisi Berhasil</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Data log aplikasi telah tersimpan di sistem. Kami akan menghubungi Anda segera.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">OPEN<span>MICROLOCK</span></div>
+                    <p>Membuka akses keamanan digital mutakhir untuk semua kalangan melalui platform open-source.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Pintasan</h4>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#about">Latar Belakang</a></li>
+                        <li><a href="#founder">Tim Inti</a></li>
+                        <li><a href="#darmi">Simulator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Jaringan</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 OPEN MICROLOCK FRAMEWORK. INITIATIVE BY ADAM & REVANZA.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
