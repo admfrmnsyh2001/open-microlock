@@ -214,31 +214,59 @@
             <h2 class="heading-serif heading-section">Join the Movement.</h2>
             <p class="subtitle" style="margin: 0 auto 40px auto;">We are looking for maintainers, contributors, and reviewers to scale this architecture globally.</p>
 
-            <div class="contact-bento glass-card">
-                <form id="joinForm">
-                    <div class="form-group">
-                        <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Full Name</label>
-                        <input type="text" id="name" placeholder="John Doe" required>
+            <div class="contact-bento">
+                <div class="glass-card direct-contact">
+                    <h3 class="heading-serif" style="font-size: 1.8rem; margin-bottom: 16px; text-align: left;">Hubungi Kami</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 32px; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                        Untuk pertanyaan teknis, kolaborasi proyek, atau informasi lebih lanjut mengenai Open Microlock, hubungi tim inti kami secara langsung.
+                    </p>
+                    
+                    <div class="contact-methods" style="text-align: left;">
+                        <div class="contact-method-item" style="margin-bottom: 24px;">
+                            <span class="mono-label" style="font-size: 0.7rem; color: var(--color-primary); margin-bottom: 8px;">Hardware & Security</span>
+                            <h4 style="font-size: 1.2rem; font-weight: 500; color: var(--text-bright); margin-bottom: 4px;">Adam Firmansyah</h4>
+                            <a href="mailto:adamfirmansyah2001@gmail.com" style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition-fast);" class="email-link">
+                                <i class="far fa-envelope"></i> adamfirmansyah2001@gmail.com
+                            </a>
+                        </div>
+                        
+                        <div class="contact-method-item">
+                            <span class="mono-label" style="font-size: 0.7rem; color: var(--color-primary); margin-bottom: 8px;">Software & Integration</span>
+                            <h4 style="font-size: 1.2rem; font-weight: 500; color: var(--text-bright); margin-bottom: 4px;">Revanza Firdaus</h4>
+                            <a href="mailto:revanza.firdaus@gmail.com" style="font-family: var(--font-mono); color: var(--text-muted); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition-fast);" class="email-link">
+                                <i class="far fa-envelope"></i> revanza.firdaus@gmail.com
+                            </a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Email Address</label>
-                        <input type="email" id="email" placeholder="john@example.com" required>
+                </div>
+
+                <div class="glass-card">
+                    <h3 class="heading-serif" style="font-size: 1.8rem; margin-bottom: 24px; text-align: left;">Gabung Kontributor</h3>
+                    <form id="joinForm">
+                        <div class="form-group">
+                            <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Nama Lengkap</label>
+                            <input type="text" id="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Alamat Email</label>
+                            <input type="email" id="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Minat Kontribusi</label>
+                            <select id="role">
+                                <option value="programmer">Software / Firmware Engineer</option>
+                                <option value="hardware">Hardware / PCB Designer</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 32px;">
+                            <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Pesan</label>
+                            <textarea id="message" rows="3" placeholder="Ceritakan latar belakang Anda..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Kirim Lamaran</button>
+                    </form>
+                    <div class="form-success-message" id="formSuccess">
+                        Lamaran berhasil dikirim. Kami akan segera menghubungi Anda.
                     </div>
-                    <div class="form-group">
-                        <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Contribution Interest</label>
-                        <select id="role">
-                            <option value="programmer">Software / Firmware Engineer</option>
-                            <option value="hardware">Hardware / PCB Designer</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 32px;">
-                        <label style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 8px;">Message</label>
-                        <textarea id="message" rows="3" placeholder="Tell us about your background..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
-                </form>
-                <div class="form-success-message" id="formSuccess">
-                    Application successfully submitted. We will be in touch.
                 </div>
             </div>
         </div>

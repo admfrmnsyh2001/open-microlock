@@ -576,9 +576,19 @@ section {
 
 .contact-bento {
     display: grid;
-    grid-template-columns: 1fr;
-    max-width: 600px;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 32px;
+    max-width: 1000px;
     margin: 0 auto;
+}
+.direct-contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.email-link:hover {
+    color: var(--color-primary) !important;
+    text-shadow: 0 0 10px rgba(0, 210, 243, 0.4);
 }
 .form-group {
     margin-bottom: 20px;
@@ -627,6 +637,7 @@ footer {
     .hero-layout { flex-direction: column; }
     .hero-visuals { width: 100%; height: 400px; }
     .sim-body { flex-direction: column; height: auto; }
+    .contact-bento { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
     .nav-menu-pill { display: none; }
