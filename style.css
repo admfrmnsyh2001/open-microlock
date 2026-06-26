@@ -352,32 +352,27 @@ body {
     50% { opacity: 1; transform: scale(1.06); }
 }
 
-.chip-img-container {
+.chip-canvas-container {
     position: relative;
     width: 420px;
     height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
-    transition: transform 0.08s linear;
-    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(0, 229, 204, 0.12);
+    box-shadow: 0 0 60px rgba(0, 229, 204, 0.08), inset 0 0 40px rgba(0, 229, 204, 0.04);
+    animation: canvas-float 4s ease-in-out infinite;
 }
 
-.chip-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 0 40px rgba(0,229,204,0.35)) drop-shadow(0 20px 60px rgba(0,0,0,0.8));
-    animation: chip-float 4s ease-in-out infinite;
-    user-select: none;
-    pointer-events: none;
+.chip-canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    border-radius: 50%;
 }
 
-@keyframes chip-float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-12px) rotate(0.5deg); }
-    66% { transform: translateY(-6px) rotate(-0.3deg); }
+@keyframes canvas-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
 }
 
 /* MARQUEE */
@@ -789,13 +784,13 @@ footer {
     }
     .hero-desc { max-width: 100%; }
     .hero-stats { justify-content: center; }
-    .chip-img-container {
-        width: 280px;
-        height: 280px;
+    .chip-canvas-container {
+        width: 300px;
+        height: 300px;
     }
     .chip-glow-ring {
-        width: 280px;
-        height: 280px;
+        width: 300px;
+        height: 300px;
     }
     .hero-badge { align-self: center; }
 }

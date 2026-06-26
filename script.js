@@ -7,64 +7,151 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // =========================================
-    // 1. CHIP IMAGE — 3D CSS TILT INTERACTION
+    // 1. THREE.JS WEBGL ICOSAHEDRON ANIMATION
     // =========================================
 
-    const chipTilt = document.getElementById('chipTilt');
-    const chipImg = document.getElementById('chipImg');
+    const mountEl = document.getElementById('threeCanvas');
 
-    if (chipTilt && chipImg) {
-        let rafId = null;
-        let targetRotX = 0, targetRotY = 0;
-        let curRotX = 0, curRotY = 0;
-        let idleAngle = 0;
-        let isHovering = false;
+    if (mountEl && typeof THREE !== 'undefined') {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        camera.position.z = 3;
 
-        // Smooth interpolation loop
-        function animateChip() {
-            rafId = requestAnimationFrame(animateChip);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(mountEl.clientWidth, mountEl.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        mountEl.appendChild(renderer.domElement);
 
-            if (!isHovering) {
-                idleAngle += 0.012;
-                targetRotX = Math.sin(idleAngle * 0.7) * 6;
-                targetRotY = Math.sin(idleAngle * 0.5) * 8;
+        const geometry = new THREE.IcosahedronGeometry(1.2, 20);
+
+        const vertexShader = `
+            uniform float time;
+            varying vec3 vNormal;
+            varying vec3 vPosition;
+
+            vec3 mod289v3(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 mod289v4(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec4 permute(vec4 x) { return mod289v4(((x*34.0)+1.0)*x); }
+            vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+            float snoise(vec3 v) {
+                const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+                const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+                vec3 i  = floor(v + dot(v, C.yyy));
+                vec3 x0 = v - i + dot(i, C.xxx);
+                vec3 g = step(x0.yzx, x0.xyz);
+                vec3 l = 1.0 - g;
+                vec3 i1 = min(g.xyz, l.zxy);
+                vec3 i2 = max(g.xyz, l.zxy);
+                vec3 x1 = x0 - i1 + C.xxx;
+                vec3 x2 = x0 - i2 + C.yyy;
+                vec3 x3 = x0 - D.yyy;
+                i = mod289v3(i);
+                vec4 p = permute(permute(permute(
+                    i.z + vec4(0.0, i1.z, i2.z, 1.0))
+                    + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+                    + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+                float n_ = 0.142857142857;
+                vec3 ns = n_ * D.wyz - D.xzx;
+                vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+                vec4 x_ = floor(j * ns.z);
+                vec4 y_ = floor(j - 7.0 * x_);
+                vec4 x = x_ * ns.x + ns.yyyy;
+                vec4 y = y_ * ns.x + ns.yyyy;
+                vec4 h = 1.0 - abs(x) - abs(y);
+                vec4 b0 = vec4(x.xy, y.xy);
+                vec4 b1 = vec4(x.zw, y.zw);
+                vec4 s0 = floor(b0)*2.0+1.0;
+                vec4 s1 = floor(b1)*2.0+1.0;
+                vec4 sh = -step(h, vec4(0.0));
+                vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+                vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+                vec3 p0 = vec3(a0.xy,h.x);
+                vec3 p1 = vec3(a0.zw,h.y);
+                vec3 p2 = vec3(a1.xy,h.z);
+                vec3 p3 = vec3(a1.zw,h.w);
+                vec4 norm = taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+                p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+                vec4 m = max(0.6 - vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)), 0.0);
+                m = m * m;
+                return 42.0 * dot(m*m, vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
             }
 
-            curRotX += (targetRotX - curRotX) * 0.08;
-            curRotY += (targetRotY - curRotY) * 0.08;
+            void main() {
+                vNormal = normal;
+                vPosition = position;
+                float displacement = snoise(position * 2.0 + time * 0.5) * 0.2;
+                vec3 newPosition = position + normal * displacement;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+            }
+        `;
 
-            chipTilt.style.transform = `perspective(700px) rotateX(${curRotX}deg) rotateY(${curRotY}deg)`;
+        const fragmentShader = `
+            uniform vec3 color;
+            uniform vec3 pointLightPos;
+            varying vec3 vNormal;
+            varying vec3 vPosition;
 
-            // Dynamic glow follows tilt
-            const glowX = 50 + curRotY * 1.5;
-            const glowY = 50 - curRotX * 1.5;
-            chipImg.style.filter = `
-                drop-shadow(0 0 40px rgba(0,229,204,0.35))
-                drop-shadow(0 20px 60px rgba(0,0,0,0.8))
-                drop-shadow(${curRotY * 0.5}px ${-curRotX * 0.5}px 30px rgba(0,229,204,0.2))
-            `;
+            void main() {
+                vec3 normal = normalize(vNormal);
+                vec3 lightDir = normalize(pointLightPos - vPosition);
+                float diffuse = max(dot(normal, lightDir), 0.0);
+                float fresnel = 1.0 - dot(normal, vec3(0.0, 0.0, 1.0));
+                fresnel = pow(fresnel, 2.0);
+                vec3 finalColor = color * diffuse + color * fresnel * 0.5;
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                time: { value: 0 },
+                pointLightPos: { value: new THREE.Vector3(0, 0, 5) },
+                color: { value: new THREE.Color(0x00e5cc) }
+            },
+            vertexShader,
+            fragmentShader,
+            wireframe: true
+        });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+        pointLight.position.set(0, 0, 5);
+        scene.add(pointLight);
+
+        let frameId;
+        function animateScene(t) {
+            material.uniforms.time.value = t * 0.0003;
+            mesh.rotation.y += 0.0005;
+            mesh.rotation.x += 0.0002;
+            renderer.render(scene, camera);
+            frameId = requestAnimationFrame(animateScene);
         }
-        animateChip();
+        animateScene(0);
 
-        // Mouse move → track inside hero only
-        const heroSection = document.getElementById('home');
-        if (heroSection) {
-            heroSection.addEventListener('mousemove', (e) => {
-                const rect = chipTilt.getBoundingClientRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-                const dx = (e.clientX - cx) / (rect.width * 0.5);
-                const dy = (e.clientY - cy) / (rect.height * 0.5);
-
-                isHovering = true;
-                targetRotX = -dy * 18;
-                targetRotY = dx * 22;
-            });
-
-            heroSection.addEventListener('mouseleave', () => {
-                isHovering = false;
-            });
+        // Resize handler
+        function handleThreeResize() {
+            const w = mountEl.clientWidth;
+            const h = mountEl.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
         }
+        window.addEventListener('resize', handleThreeResize);
+
+        // Mouse-tracking light
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 2 - 1;
+            const y = -(e.clientY / window.innerHeight) * 2 + 1;
+            const vec = new THREE.Vector3(x, y, 0.5).unproject(camera);
+            const dir = vec.sub(camera.position).normalize();
+            const dist = -camera.position.z / dir.z;
+            const pos = camera.position.clone().add(dir.multiplyScalar(dist));
+            pointLight.position.copy(pos);
+            material.uniforms.pointLightPos.value = pos;
+        });
     }
 
 

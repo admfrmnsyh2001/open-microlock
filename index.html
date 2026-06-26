@@ -99,12 +99,10 @@
                 </div>
             </div>
 
-            <!-- RIGHT: Chip image -->
+            <!-- RIGHT: Three.js WebGL Animation -->
             <div class="hero-chip-wrap">
                 <div class="chip-glow-ring"></div>
-                <div class="chip-img-container" id="chipTilt">
-                    <img src="chip.png" alt="3D Microchip" class="chip-img" id="chipImg" draggable="false">
-                </div>
+                <div class="chip-canvas-container" id="threeCanvas"></div>
             </div>
         </div>
 
@@ -287,6 +285,8 @@
         </div>
     </footer>
 
+    <!-- Three.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <!-- Custom JS -->
     <script src="script.js"></script>
 </body>
